@@ -111,8 +111,6 @@ class Restrict_Content_Role {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-restrict-content-role-i18n.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sc-restrict-content-config.php';
-
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
@@ -155,6 +153,8 @@ class Restrict_Content_Role {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Restrict_Content_Role_Admin( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'load_redux_config' );
 
 		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

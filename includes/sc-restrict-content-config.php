@@ -20,7 +20,10 @@
      * For full documentation on arguments, please refer to: https://github.com/ReduxFramework/ReduxFramework/wiki/Arguments
      * */
 
-    $plugin = get_plugin_data( dirname( dirname( __FILE__ ) ) . '/restrict-content-role.php' ); // TODO: replace the hardcoded filename with dynamic getter
+    $plugin = get_file_data( dirname( dirname( __FILE__ ) ) . '/restrict-content-role.php', array(
+        'Name' => 'Plugin Name',
+        'Version' => 'Version'
+    ) ); // TODO: replace the hardcoded filename with dynamic getter
 
     $args = array(
         // TYPICAL -> Change these values as you need/desire
@@ -131,59 +134,28 @@
         )
     );
 
-    // ADMIN BAR LINKS -> Setup custom links in the admin bar menu as external items.
-    $args['admin_bar_links'][] = array(
-        'id'    => 'redux-docs',
-        'href'  => 'http://docs.reduxframework.com/',
-        'title' => __( 'Documentation', 'sc-restrict-content-role' ),
-    );
-
-    $args['admin_bar_links'][] = array(
-        //'id'    => 'redux-support',
-        'href'  => 'https://github.com/ReduxFramework/redux-framework/issues',
-        'title' => __( 'Support', 'sc-restrict-content-role' ),
-    );
-
-    $args['admin_bar_links'][] = array(
-        'id'    => 'redux-extensions',
-        'href'  => 'reduxframework.com/extensions',
-        'title' => __( 'Extensions', 'sc-restrict-content-role' ),
-    );
-
     // SOCIAL ICONS -> Setup custom links in the footer for quick links in your panel footer icons.
     $args['share_icons'][] = array(
-        'url'   => 'https://github.com/ReduxFramework/ReduxFramework',
+        'url'   => 'https://github.com/simple-code-hr',
         'title' => 'Visit us on GitHub',
         'icon'  => 'el el-github'
         //'img'   => '', // You can use icon OR img. IMG needs to be a full URL.
     );
     $args['share_icons'][] = array(
-        'url'   => 'https://www.facebook.com/pages/Redux-Framework/243141545850368',
+        'url'   => 'https://www.facebook.com/simplecodehr/',
         'title' => 'Like us on Facebook',
         'icon'  => 'el el-facebook'
     );
     $args['share_icons'][] = array(
-        'url'   => 'http://twitter.com/reduxframework',
+        'url'   => 'https://twitter.com/simplecode',
         'title' => 'Follow us on Twitter',
         'icon'  => 'el el-twitter'
     );
     $args['share_icons'][] = array(
-        'url'   => 'http://www.linkedin.com/company/redux-framework',
+        'url'   => 'https://www.linkedin.com/company/simple-code',
         'title' => 'Find us on LinkedIn',
         'icon'  => 'el el-linkedin'
     );
-
-    // Panel Intro text -> before the form
-    if ( ! isset( $args['global_variable'] ) || $args['global_variable'] !== false ) {
-        if ( ! empty( $args['global_variable'] ) ) {
-            $v = $args['global_variable'];
-        } else {
-            $v = str_replace( '-', '_', $args['opt_name'] );
-        }
-        $args['intro_text'] = sprintf( __( '<p>Did you know that Redux sets a global variable for you? To access any of your saved options from within your code you can use your global variable: <strong>$%1$s</strong></p>', 'sc-restrict-content-role' ), $v );
-    } else {
-        $args['intro_text'] = __( '<p>This text is displayed above the options panel. It isn\'t required, but more info is always better! The intro_text field accepts all HTML.</p>', 'sc-restrict-content-role' );
-    }
 
     Redux::setArgs( $opt_name, $args );
 
@@ -214,7 +186,7 @@
         'icon'             => 'el el-home'
     ) );
 
-    $editable_roles = get_editable_roles();
+    $editable_roles = wp_roles()->roles;
     $excluded_roles = array( 'administrator' );
 
     $roles_settings = array(

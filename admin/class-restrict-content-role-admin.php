@@ -109,6 +109,16 @@ class Restrict_Content_Role_Admin {
 
 	}
 
+	public function load_redux_config() {
+
+		if (!is_admin()) {
+			return;
+		}
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sc-restrict-content-config.php';
+
+	}
+
 	/**
 	 * Filter admin page results based on user role
 	 */
@@ -165,6 +175,11 @@ class Restrict_Content_Role_Admin {
 	public function get_roles_settings() {
 
 		global $sc_restrict_content;
+
+		if (!$sc_restrict_content || count($sc_restrict_content) === 0) {
+			return;
+		}
+
 		$roles_settings = array();
 
 		foreach ($sc_restrict_content as $key => $value) {
